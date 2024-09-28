@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="WC3OmniTool.ToolButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WC3OmniTool"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:ToolButton, IsDesignTimeCreatable=True}"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             Width="100"
+             Height="100"
+             Background="#212121"
+             Foreground="#F3F3F3"
+             MouseEnter="UserControl_MouseEnter"
+             MouseLeave="UserControl_MouseLeave"
+             MouseDown="UserControl_MouseDown"
+             MouseUp="UserControl_MouseUp">
+    <Grid x:Name="Footer">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="{Binding Icon}" HorizontalAlignment="Center" FontSize="30" Margin="0,0,0,5" TextAlignment="Center"/>
+            <TextBlock Text="{Binding Text}" HorizontalAlignment="Center" FontSize="9" TextAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

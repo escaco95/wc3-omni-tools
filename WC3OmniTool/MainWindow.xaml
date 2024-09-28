@@ -1,0 +1,70 @@
+﻿<Window x:Class="WC3OmniTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WC3OmniTool"
+        mc:Ignorable="d"
+        Title="WC3OmniTool" Height="150" Width="110"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        ShowInTaskbar="False"
+        Topmost="True"
+        ResizeMode="NoResize" 
+        Foreground="#F3F3F3"
+        d:Opacity="1.0"
+        Opacity="0.5"
+        Loaded="Window_Loaded"
+        MouseEnter="Window_MouseEnter"
+        MouseLeave="Window_MouseLeave">
+    
+    <Grid Margin="5,5,5,5">
+        
+        <!-- 외곽 글로우 효과 -->
+        <Border BorderBrush="#4080FF" BorderThickness="1">
+            <Border.Effect>
+                <BlurEffect Radius="5"/>
+            </Border.Effect>
+        </Border>
+
+        <!-- 콘텐츠 영역 -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="WC3 Omni Tool" Padding="5" FontSize="9" VerticalAlignment="Center" Background="#212121" MouseDown="OnCaptionMouseDown"/>
+            <Button HorizontalAlignment="Right" Width="20" Background="Transparent" BorderThickness="0" FocusVisualStyle="{x:Null}" Click="HideButton_Click">
+                <TextBlock Text="❌" Foreground="#F3F3F3" FontSize="7"/>
+            </Button>
+            <Grid Grid.Row="0" VerticalAlignment="Top" Height="2" Background="#FF80FF" />
+            <Button Grid.Row="1" Background="#4080FF" BorderThickness="0" FocusVisualStyle="{x:Null}" Click="RefreshButton_Click">
+                <TextBlock Text="🔄 새로고침" Foreground="#F3F3F3" FontSize="10"/>
+            </Button>
+            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden" Background="#212121">
+                <StackPanel x:Name="ToolButtonContainer">
+                    <!-- 도구 버튼 목록 영역 -->
+                </StackPanel>
+            </ScrollViewer>
+            <Grid x:Name="RefreshPlaceholder" Grid.Row="2" Height="100" Visibility="Collapsed">
+                <TextBlock Text="⏳" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
+                <TextBlock Text="새로고침 중..." HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0"/>
+            </Grid>
+            <Grid x:Name="ErrorPlaceholder" Grid.Row="2" Height="100" Visibility="Collapsed">
+                <TextBlock Text="⚠️" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
+                <TextBlock Text="오류 발생" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0"/>
+            </Grid>
+            <Grid x:Name="EmptyPlaceholder" Grid.Row="2" Height="100">
+                <TextBlock Text="「」" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
+                <TextBlock Text="도구 없음" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0"/>
+            </Grid>
+        </Grid>
+
+        <!-- 외곽선 효과 -->
+        <Border BorderBrush="#4080FF" BorderThickness="1"/>
+        
+    </Grid>
+    
+</Window>
