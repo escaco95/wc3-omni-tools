@@ -1,5 +1,6 @@
 {
   "Icon": "🎚️",
-  "Name": "클래식/리포지드\n스위치",
+  "ButtonText": "클래식/리포지드\n스위치",
+  "MenuText": "클래식/리포지드 스위치",
   "Executable": "ClassicReforgedEditorSwitch.exe"
 }

@@ -1,5 +1,7 @@
 ﻿using NonWPF.Data;
 using NonWPF.Forms;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
@@ -25,6 +27,7 @@ namespace WC3OmniTool
         private readonly System.Windows.Forms.ToolStripMenuItem _exitMenuItem = new("종료(&X)") { ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X };
 
         private readonly List<ToolButton> _cachedToolButtons = [];
+        private readonly List<System.Windows.Forms.ToolStripMenuItem> _cachedContextMenuItem = [];
 
         public MainWindow()
         {
@@ -196,7 +199,9 @@ namespace WC3OmniTool
 
             this.Height = windowHeight;
 
-            // 도구 버튼 생성
+            _notifierContextMenuStrip.Items.Clear();
+
+            // 도구 버튼 및 컨텍스트 메뉴 아이템 생성
             for (int i = 0; i < loadResult.Tools.Length; i++)
             {
                 ToolButton toolButton;
@@ -212,17 +217,51 @@ namespace WC3OmniTool
                 }
 
                 toolButton.Icon = loadResult.Tools[i].Icon;
-                toolButton.Text = loadResult.Tools[i].Name;
+                toolButton.Text = loadResult.Tools[i].ButtonText;
                 toolButton.Tag = loadResult.Tools[i].Executable;
 
                 ToolButtonContainer.Children.Add(toolButton);
+
+                System.Windows.Forms.ToolStripMenuItem toolMenuItem;
+                // 캐시된 컨텍스트 메뉴 아이템이 있으면 사용, 없으면 생성
+                if (_cachedContextMenuItem.Count > i)
+                {
+                    toolMenuItem = _cachedContextMenuItem[i];
+                }
+                else
+                {
+                    toolMenuItem = new(){
+                        AutoSize = true,
+                    };
+                    toolMenuItem.Click += (sender, e) =>
+                    {
+                        if (toolMenuItem.Tag is not string executablePath) return;
+
+                        ProcessUtils.StartProcess(executablePath);
+                    };
+                    _cachedContextMenuItem.Add(toolMenuItem);
+                }
+
+                toolMenuItem.Text = loadResult.Tools[i].MenuText;
+                toolMenuItem.Tag = loadResult.Tools[i].Executable;
+
+                _notifierContextMenuStrip.Items.Add(toolMenuItem);
             }
+
+            _notifierContextMenuStrip.Items.AddRange([
+                _toolSeparator,
+                _refreshToolsMenuItem,
+                _toggleVisibilityMenuItem,
+                _appSeparator,
+                _exitMenuItem
+                ]);
         }
 
-        record ToolInfo(string Icon, string Name, string Executable)
+        record ToolInfo(string Icon, string ButtonText, string MenuText, string Executable)
         {
             public string Icon { get; set; } = Icon;
-            public string Name { get; set; } = Name;
+            public string ButtonText { get; set; } = ButtonText;
+            public string MenuText { get; set; } = MenuText;
             public string Executable { get; set; } = Executable;
         }
 
