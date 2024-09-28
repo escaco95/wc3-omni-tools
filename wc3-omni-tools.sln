@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WC3OmniTool", "WC3OmniTool\WC3OmniTool.csproj", "{94FC2B04-FFBB-4B55-83DC-3E1862D097C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WC3OmniTool", "WC3OmniTool\WC3OmniTool.csproj", "{94FC2B04-FFBB-4B55-83DC-3E1862D097C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NonWPF", "NonWPF\NonWPF.csproj", "{37F9C6C3-B10B-4E7B-AC4F-33C1162C1E78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NonWPF", "NonWPF\NonWPF.csproj", "{37F9C6C3-B10B-4E7B-AC4F-33C1162C1E78}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{17067636-BC49-4D72-9D7C-D5FD80712CAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassicReforgedEditorSwitch", "ClassicReforgedEditorSwitch\ClassicReforgedEditorSwitch.csproj", "{0711EE8B-C4E8-4465-87B1-C096F088C141}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassicReforgedEditorSwitch", "ClassicReforgedEditorSwitch\ClassicReforgedEditorSwitch.csproj", "{0711EE8B-C4E8-4465-87B1-C096F088C141}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{3A9DF066-E29B-4B54-A3A3-2729EB519389}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
