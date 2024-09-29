@@ -1,12 +1,12 @@
 ﻿using NonWPF.Data;
 using NonWPF.Forms;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace WC3OmniTool
 {
@@ -18,6 +18,9 @@ namespace WC3OmniTool
         // JSON 직렬화 옵션 (보기 좋은 형식으로 출력)
         private static readonly JsonSerializerOptions JsonSerializerOptions = new() { WriteIndented = true };
 
+        // 창 아이콘 및 트레이 아이콘으로 사용되는 BitmapImage 리소스
+        private static readonly BitmapImage _defaultIcon = Base64Utils.ConvertFrom("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPYzy9mOE/AyXg6HywAWRhkOVMn74AmRQApu8/IAysVgAxIcDEyQFhMCJhGEBm4wJMXFADYABmKzGaQYDp1TsoCwiQNW/GgdEB09V7EAa6zb5IGAaQ2SBw7ynQgBdvUQMLxIZhEIDZiq4ZBHYcA1rYms3wv3oqVAQNoGsuh9LIgMlIA8pCA8j\u002BhfnfBog7QQJQcMIISECTMtEY6AowBrHtjYApEcggGiB7AcS2OAckSHUBMk70I9EF6MDDChgLlGVnBgYA0TBnlfw85QEAAAAASUVORK5CYII=");
+
         private readonly Notifier _notifier = new();
         private readonly System.Windows.Forms.ContextMenuStrip _notifierContextMenuStrip = new();
         private readonly System.Windows.Forms.ToolStripMenuItem _toolPlaceholder = new("( 도구 없음 )") { Enabled = false };
@@ -27,12 +30,24 @@ namespace WC3OmniTool
             ShortcutKeys = System.Windows.Forms.Keys.F5,
             ToolTipText = "도구 목록을 다시 스캔합니다."
         };
+        private readonly System.Windows.Forms.ToolStripMenuItem _browseToolsMenuItem = new("도구 모음 폴더 열기(&B)")
+        {
+            ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B,
+            ToolTipText = "파일 탐색기에서 도구 모음 폴더를 엽니다."
+        };
+        private readonly System.Windows.Forms.ToolStripSeparator _windowSeparator = new();
         private readonly System.Windows.Forms.ToolStripMenuItem _toggleVisibilityMenuItem = new("창 보이기/숨기기(&S)")
         {
             ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S,
             ToolTipText = "도구 목록을 보이거나 숨깁니다."
         };
         private readonly System.Windows.Forms.ToolStripSeparator _appSeparator = new();
+        private readonly System.Windows.Forms.ToolStripMenuItem _appUpdateMenuItem = new("업데이트 확인(&U)")
+        {
+            ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U,
+            ToolTipText = "최신 버전을 확인합니다."
+        };
+        private readonly System.Windows.Forms.ToolStripSeparator _exitSeperator = new();
         private readonly System.Windows.Forms.ToolStripMenuItem _exitMenuItem = new("종료(&X)")
         {
             ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X,
@@ -89,27 +104,56 @@ namespace WC3OmniTool
             RefreshTools();
         }
 
+        private void ToolButtonScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            // Check if content can scroll upwards
+            if (ToolButtonScrollViewer.VerticalOffset > 0)
+            {
+                TopShadow.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                TopShadow.Visibility = Visibility.Collapsed;
+            }
+
+            // Check if content can scroll downwards
+            if (ToolButtonScrollViewer.VerticalOffset < ToolButtonScrollViewer.ScrollableHeight)
+            {
+                BottomShadow.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BottomShadow.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private void InitializeTrayIcon()
         {
-            // 아이콘 초기화
-            this.Icon = Base64Utils.ConvertFrom("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPYzy9mOE/AyXg6HywAWRhkOVMn74AmRQApu8/IAysVgAxIcDEyQFhMCJhGEBm4wJMXFADYABmKzGaQYDp1TsoCwiQNW/GgdEB09V7EAa6zb5IGAaQ2SBw7ynQgBdvUQMLxIZhEIDZiq4ZBHYcA1rYms3wv3oqVAQNoGsuh9LIgMlIA8pCA8j+hfnfBog7QQJQcMIISECTMtEY6AowBrHtjYApEcggGiB7AcS2OAckSHUBMk70I9EF6MDDChgLlGVnBgYA0TBnlfw85QEAAAAASUVORK5CYII=");
+            // 윈도우 아이콘 초기화
+            Icon = _defaultIcon;
 
             // 트레이 아이콘 초기화
-            _notifier.Icon = Base64Utils.ConvertFrom("iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPYzy9mOE/AyXg6HywAWRhkOVMn74AmRQApu8/IAysVgAxIcDEyQFhMCJhGEBm4wJMXFADYABmKzGaQYDp1TsoCwiQNW/GgdEB09V7EAa6zb5IGAaQ2SBw7ynQgBdvUQMLxIZhEIDZiq4ZBHYcA1rYms3wv3oqVAQNoGsuh9LIgMlIA8pCA8j\u002BhfnfBog7QQJQcMIISECTMtEY6AowBrHtjYApEcggGiB7AcS2OAckSHUBMk70I9EF6MDDChgLlGVnBgYA0TBnlfw85QEAAAAASUVORK5CYII=");
+            _notifier.Icon = _defaultIcon;
             _notifier.Text = "WC3 Omni Tool"; // 툴팁 텍스트 설정
             _notifier.Visible = true; // 트레이 아이콘을 표시
 
             // 트레이 아이콘의 컨텍스트 메뉴 설정
             _refreshToolsMenuItem.Click += OnRefreshToolsMenuItemClick;
+            _browseToolsMenuItem.Click += OnBrowseToolsMenuItemClick;
             _toggleVisibilityMenuItem.Click += OnWindowVisibilityToggleMenuItemClick;
+            _appUpdateMenuItem.Click += OnAppUpdateMenuItemClick;
             _exitMenuItem.Click += OnExitMenuItemClick;
 
             _notifierContextMenuStrip.Items.AddRange([
                 _toolPlaceholder,
                 _toolSeparator,
                 _refreshToolsMenuItem,
+                _browseToolsMenuItem,
+                _windowSeparator,
                 _toggleVisibilityMenuItem,
                 _appSeparator,
+                _appUpdateMenuItem,
+                _exitSeperator,
                 _exitMenuItem
                 ]);
 
@@ -134,6 +178,25 @@ namespace WC3OmniTool
             RefreshTools();
         }
 
+        // "도구 모음 폴더 열기" 메뉴 아이템 클릭 시 도구 모음 폴더를 엶
+        private void OnBrowseToolsMenuItemClick(object? sender, EventArgs e)
+        {
+            var toolsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tools");
+            // 없으면 하나 만드려고 시도합니다.
+            try
+            {
+                if (!Directory.Exists(toolsPath))
+                    Directory.CreateDirectory(toolsPath);
+            }
+            catch (Exception ex)
+            {
+                // 도구 모음 폴더가 없어 하나 만드려고 시도했으나 실패했음을 메시지 박스로 알림
+                MessageBox.Show(this, $"도구 모음 폴더 초기화에 실패하였습니다.\n{ex.Message}", "도구 모음 폴더 열기", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            ProcessUtils.StartProcess("explorer.exe", toolsPath);
+        }
+
         // "창 보이기/숨기기" 메뉴 아이템 클릭 시 창을 보이거나 숨김
         private void OnWindowVisibilityToggleMenuItemClick(object? sender, EventArgs e)
         {
@@ -147,6 +210,13 @@ namespace WC3OmniTool
                 WindowState = WindowState.Normal;
                 Activate();
             }
+        }
+
+        // "업데이트 확인" 메뉴 아이템 클릭 시 업데이트 확인 창을 엶
+        private void OnAppUpdateMenuItemClick(object? sender, EventArgs e)
+        {
+            var updateCheckWindow = new UpdateCheckWindow();
+            updateCheckWindow.Show();
         }
 
         // "Exit" 메뉴 아이템 클릭 시 애플리케이션 종료
@@ -171,8 +241,12 @@ namespace WC3OmniTool
                 _toolPlaceholder,
                 _toolSeparator,
                 _refreshToolsMenuItem,
+                _browseToolsMenuItem,
+                _windowSeparator,
                 _toggleVisibilityMenuItem,
                 _appSeparator,
+                _appUpdateMenuItem,
+                _exitSeperator,
                 _exitMenuItem
                 ]);
 
@@ -202,19 +276,8 @@ namespace WC3OmniTool
                 return;
             }
 
-            // 도구 수량에 맞게 창 크기 조정
-            var toolCount = loadResult.Tools.Length;
-            var contentMargin = 10;
-            var captionHeight = 20;
-            var refreshButtonHeight = 20;
-            var toolContentHeight = toolCount * 100;
-            var windowHeight = contentMargin + captionHeight + refreshButtonHeight + toolContentHeight;
-
-            this.Height = windowHeight;
-
-            _notifierContextMenuStrip.Items.Clear();
-
             // 도구 버튼 및 컨텍스트 메뉴 아이템 생성
+            _notifierContextMenuStrip.Items.Clear();
             for (int i = 0; i < loadResult.Tools.Length; i++)
             {
                 ToolButton toolButton;
@@ -264,8 +327,12 @@ namespace WC3OmniTool
             _notifierContextMenuStrip.Items.AddRange([
                 _toolSeparator,
                 _refreshToolsMenuItem,
+                _browseToolsMenuItem,
+                _windowSeparator,
                 _toggleVisibilityMenuItem,
                 _appSeparator,
+                _appUpdateMenuItem,
+                _exitSeperator,
                 _exitMenuItem
                 ]);
         }

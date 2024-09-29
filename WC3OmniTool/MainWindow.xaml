@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WC3OmniTool"
         mc:Ignorable="d"
-        Title="WC3OmniTool" Height="150" Width="110"
+        Title="WC3OmniTool" Height="550" Width="110"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
@@ -19,7 +19,7 @@
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave">
     
-    <Grid Margin="5,5,5,5">
+    <Grid Margin="5" VerticalAlignment="Top">
 
         <!-- 외곽 글로우 효과 -->
         <Border BorderBrush="#4080FF" BorderThickness="1">
@@ -33,8 +33,9 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="20"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            
             <TextBlock Grid.Row="0" Text="WC3 Omni Tool" Padding="5" FontSize="9" VerticalAlignment="Center" MouseDown="OnCaptionMouseDown"/>
             <Button HorizontalAlignment="Right" Width="20" Background="Transparent" BorderThickness="0" FocusVisualStyle="{x:Null}" Click="HideButton_Click">
                 <Button.ToolTip>
@@ -43,28 +44,59 @@
                 <TextBlock Text="❌" Foreground="#F3F3F3" FontSize="7"/>
             </Button>
             <Grid Grid.Row="0" VerticalAlignment="Top" Height="2" Background="#FF80FF" />
+            
             <Button Grid.Row="1" Background="#4080FF" BorderThickness="0" FocusVisualStyle="{x:Null}" Click="RefreshButton_Click">
                 <Button.ToolTip>
                     <TextBlock Text="도구 목록을 다시 스캔합니다"/>
                 </Button.ToolTip>
                 <TextBlock Text="🔄 새로고침" Foreground="#F3F3F3" FontSize="10"/>
             </Button>
-            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden">
-                <StackPanel x:Name="ToolButtonContainer">
+            
+            <ScrollViewer x:Name="ToolButtonScrollViewer"
+                          Grid.Row="2" 
+                          MaxHeight="500" 
+                          VerticalScrollBarVisibility="Hidden"
+                          ScrollChanged="ToolButtonScrollViewer_ScrollChanged">
+                <StackPanel x:Name="ToolButtonContainer" VerticalAlignment="Top">
                     <!-- 도구 버튼 목록 영역 -->
                 </StackPanel>
             </ScrollViewer>
+            
+            <!-- Top gradient shadow -->
+            <Border x:Name="TopShadow" Grid.Row="2" Height="20" VerticalAlignment="Top" Visibility="Collapsed" d:Visibility="Visible" IsHitTestVisible="False">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#B04080FF" Offset="0"/>
+                        <GradientStop Color="#004080FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <!-- Upward arrow -->
+                <Path Fill="White" Opacity="0.2" HorizontalAlignment="Center" VerticalAlignment="Top" Data="M 0 10 L 10 0 L 20 10 Z" Margin="0,5,0,0"/>
+            </Border>
+
+            <!-- Bottom gradient shadow -->
+            <Border x:Name="BottomShadow" Grid.Row="2" Height="20" VerticalAlignment="Bottom" Visibility="Collapsed" d:Visibility="Visible" IsHitTestVisible="False" Margin="0,0,0,1">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#B04080FF" Offset="1"/>
+                        <GradientStop Color="#004080FF" Offset="0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <!-- Downward arrow -->
+                <Path Fill="White" Opacity="0.2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Data="M 0 0 L 10 10 L 20 0 Z" Margin="0,0,0,5"/>
+            </Border>
+            
             <Grid x:Name="RefreshPlaceholder" Grid.Row="2" Height="100" Visibility="Collapsed">
-                <TextBlock Text="⏳" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
-                <TextBlock Text="새로고침 중..." HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0"/>
+                <TextBlock Text="⏳" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20"/>
+                <TextBlock Text="새로고침 중..." HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
             </Grid>
             <Grid x:Name="ErrorPlaceholder" Grid.Row="2" Height="100" Visibility="Collapsed">
-                <TextBlock Text="⚠️" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
-                <TextBlock Text="오류 발생" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0"/>
+                <TextBlock Text="⚠️" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20"/>
+                <TextBlock Text="오류 발생" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
             </Grid>
             <Grid x:Name="EmptyPlaceholder" Grid.Row="2" Height="100">
-                <TextBlock Text="「」" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
-                <TextBlock Text="도구 없음" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0"/>
+                <TextBlock Text="「」" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20"/>
+                <TextBlock Text="도구 없음" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
             </Grid>
         </Grid>
 
