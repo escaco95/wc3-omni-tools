@@ -93,6 +93,21 @@ namespace WC3OmniTool
             this.Opacity = 0.5;
         }
 
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.F5:
+                    {
+                        // F5 키를 누르면 도구 모음 새로고침
+                        RefreshTools();
+
+                        e.Handled = true; // 이벤트 처리됨 표시
+                    }
+                    break;
+            }
+        }
+
         private void HideButton_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();

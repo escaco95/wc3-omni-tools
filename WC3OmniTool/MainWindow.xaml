@@ -17,7 +17,8 @@
         Opacity="0.5"
         Loaded="Window_Loaded"
         MouseEnter="Window_MouseEnter"
-        MouseLeave="Window_MouseLeave">
+        MouseLeave="Window_MouseLeave"
+        PreviewKeyDown="Window_PreviewKeyDown">
     
     <Grid Margin="5" VerticalAlignment="Top">
 
@@ -47,7 +48,7 @@
             
             <Button Grid.Row="1" Background="#4080FF" BorderThickness="0" FocusVisualStyle="{x:Null}" Click="RefreshButton_Click">
                 <Button.ToolTip>
-                    <TextBlock Text="도구 목록을 다시 스캔합니다"/>
+                    <TextBlock Text="새로고침 (F5)&#x0a;도구 목록을 다시 스캔합니다"/>
                 </Button.ToolTip>
                 <TextBlock Text="🔄 새로고침" Foreground="#F3F3F3" FontSize="10"/>
             </Button>
