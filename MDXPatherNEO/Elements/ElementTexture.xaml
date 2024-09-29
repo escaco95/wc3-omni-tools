@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="MDXPatherNEO.ElementTexture"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MDXPatherNEO"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=local:ElementTexture, IsDesignTimeCreatable=True}"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:Foreground="#FAFAFA"
+             d:DesignWidth="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="{Binding TextureType}" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Replaceable ID 또는 파일 텍스처 여부를 나타내는 아이콘입니다."/>
+        <TextBox Grid.Column="1" Text="{Binding TexturePath, UpdateSourceTrigger=PropertyChanged}" Padding="2,0,0,2"
+                 PreviewKeyDown="TextBox_PreviewKeyDown"/>
+        <TextBlock Grid.Column="2" Text="🚩" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="텍스처 플래그입니다. 가로 반복, 세로 반복 등의 여부가 기록되어 있습니다."/>
+        <TextBlock Grid.Column="3" Text="{Binding TextureFlag}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</UserControl>
