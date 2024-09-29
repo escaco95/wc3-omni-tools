@@ -29,13 +29,13 @@
         </Border>
 
         <!-- 콘텐츠 영역 -->
-        <Grid>
+        <Grid Background="#212121">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="WC3 Omni Tool" Padding="5" FontSize="9" VerticalAlignment="Center" Background="#212121" MouseDown="OnCaptionMouseDown"/>
+            <TextBlock Grid.Row="0" Text="WC3 Omni Tool" Padding="5" FontSize="9" VerticalAlignment="Center" MouseDown="OnCaptionMouseDown"/>
             <Button HorizontalAlignment="Right" Width="20" Background="Transparent" BorderThickness="0" FocusVisualStyle="{x:Null}" Click="HideButton_Click">
                 <TextBlock Text="❌" Foreground="#F3F3F3" FontSize="7"/>
             </Button>
@@ -43,7 +43,7 @@
             <Button Grid.Row="1" Background="#4080FF" BorderThickness="0" FocusVisualStyle="{x:Null}" Click="RefreshButton_Click">
                 <TextBlock Text="🔄 새로고침" Foreground="#F3F3F3" FontSize="10"/>
             </Button>
-            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden" Background="#212121">
+            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden">
                 <StackPanel x:Name="ToolButtonContainer">
                     <!-- 도구 버튼 목록 영역 -->
                 </StackPanel>
