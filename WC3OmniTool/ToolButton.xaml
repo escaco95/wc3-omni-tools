@@ -9,12 +9,18 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              Width="100"
              Height="100"
+             Cursor="Hand"
              Background="#212121"
              Foreground="#F3F3F3"
              MouseEnter="UserControl_MouseEnter"
              MouseLeave="UserControl_MouseLeave"
              MouseDown="UserControl_MouseDown"
              MouseUp="UserControl_MouseUp">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="파일 탐색기에서 도구 폴더 열기(_X)" Click="ToolBrowse_Click"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
     <Grid x:Name="Footer">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="{Binding Icon}" HorizontalAlignment="Center" FontSize="30" Margin="0,0,0,5" TextAlignment="Center"/>

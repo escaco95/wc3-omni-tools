@@ -1,5 +1,6 @@
 ﻿using NonWPF.Forms;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -46,21 +47,39 @@ namespace WC3OmniTool
 
         private void UserControl_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            CaptureMouse();
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+                CaptureMouse();
         }
 
         private void UserControl_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            ReleaseMouseCapture();
+            if(e.ChangedButton == System.Windows.Input.MouseButton.Left)
+            {
+                ReleaseMouseCapture();
 
-            // 만약 마우스가 버튼을 떠났다면 아무것도 하지 않음
-            if (!IsMouseOver) return;
+                // 만약 마우스가 버튼을 떠났다면 아무것도 하지 않음
+                if (!IsMouseOver) return;
 
+                ExecuteTool();
+            }
+        }
+
+        private void ToolBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tag is not string executablePath) return;
+
+            var args = $"/select, \"{Path.GetFullPath(executablePath)}\"";
+
+            ProcessUtils.StartProcess("explorer.exe", args);
+        }
+
+        private void ExecuteTool()
+        {
             if (Tag is not string executablePath) return;
 
             // 컨트롤의 Window 내 좌상단 위치 취득
-            var controlTop = this.PointToScreen(new Point(0, 0)).Y;
-            var controlLeft = this.PointToScreen(new Point(0, 0)).X;
+            var controlTop = PointToScreen(new Point(0, 0)).Y;
+            var controlLeft = PointToScreen(new Point(0, 0)).X;
 
             // DPI 정보를 가져옴
             var dpi = VisualTreeHelper.GetDpi(this);
@@ -70,8 +89,8 @@ namespace WC3OmniTool
             // DPI 보정을 적용하여 실제 화면 좌표를 계산
             var correctedLeft = controlLeft / dpiScaleX;
             var correctedTop = controlTop / dpiScaleY;
-            var correctedWidth = this.ActualWidth * dpiScaleX;
-            var correctedHeight = this.ActualHeight * dpiScaleY;
+            var correctedWidth = ActualWidth * dpiScaleX;
+            var correctedHeight = ActualHeight * dpiScaleY;
 
             // 보정된 값을 인수로 전달
             var args = $"-omni.bounds={(int)correctedLeft},{(int)correctedTop},{(int)correctedWidth},{(int)correctedHeight}";
