@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace WC3OmniTool
@@ -21,10 +22,22 @@ namespace WC3OmniTool
         private readonly System.Windows.Forms.ContextMenuStrip _notifierContextMenuStrip = new();
         private readonly System.Windows.Forms.ToolStripMenuItem _toolPlaceholder = new("( 도구 없음 )") { Enabled = false };
         private readonly System.Windows.Forms.ToolStripSeparator _toolSeparator = new();
-        private readonly System.Windows.Forms.ToolStripMenuItem _refreshToolsMenuItem = new("도구 모음 새로고침(&R)") { ShortcutKeys = System.Windows.Forms.Keys.F5 };
-        private readonly System.Windows.Forms.ToolStripMenuItem _toggleVisibilityMenuItem = new("창 보이기/숨기기(&S)") { ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S };
+        private readonly System.Windows.Forms.ToolStripMenuItem _refreshToolsMenuItem = new("도구 모음 새로고침(&R)")
+        {
+            ShortcutKeys = System.Windows.Forms.Keys.F5,
+            ToolTipText = "도구 목록을 다시 스캔합니다."
+        };
+        private readonly System.Windows.Forms.ToolStripMenuItem _toggleVisibilityMenuItem = new("창 보이기/숨기기(&S)")
+        {
+            ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S,
+            ToolTipText = "도구 목록을 보이거나 숨깁니다."
+        };
         private readonly System.Windows.Forms.ToolStripSeparator _appSeparator = new();
-        private readonly System.Windows.Forms.ToolStripMenuItem _exitMenuItem = new("종료(&X)") { ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X };
+        private readonly System.Windows.Forms.ToolStripMenuItem _exitMenuItem = new("종료(&X)")
+        {
+            ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X,
+            ToolTipText = "프로그램을 완전히 종료합니다."
+        };
 
         private readonly List<ToolButton> _cachedToolButtons = [];
         private readonly List<System.Windows.Forms.ToolStripMenuItem> _cachedContextMenuItem = [];
@@ -212,12 +225,13 @@ namespace WC3OmniTool
                 }
                 else
                 {
-                    toolButton = new ToolButton();
+                    toolButton = new();
                     _cachedToolButtons.Add(toolButton);
                 }
 
                 toolButton.Icon = loadResult.Tools[i].Icon;
                 toolButton.Text = loadResult.Tools[i].ButtonText;
+                toolButton.ToolTip = loadResult.Tools[i].ToolTip;
                 toolButton.Tag = loadResult.Tools[i].Executable;
 
                 ToolButtonContainer.Children.Add(toolButton);
@@ -230,9 +244,7 @@ namespace WC3OmniTool
                 }
                 else
                 {
-                    toolMenuItem = new(){
-                        AutoSize = true,
-                    };
+                    toolMenuItem = new();
                     toolMenuItem.Click += (sender, e) =>
                     {
                         if (toolMenuItem.Tag is not string executablePath) return;
@@ -243,6 +255,7 @@ namespace WC3OmniTool
                 }
 
                 toolMenuItem.Text = loadResult.Tools[i].MenuText;
+                toolMenuItem.ToolTipText = loadResult.Tools[i].ToolTip;
                 toolMenuItem.Tag = loadResult.Tools[i].Executable;
 
                 _notifierContextMenuStrip.Items.Add(toolMenuItem);
@@ -257,11 +270,12 @@ namespace WC3OmniTool
                 ]);
         }
 
-        record ToolInfo(string Icon, string ButtonText, string MenuText, string Executable)
+        record ToolInfo(string Icon, string ButtonText, string MenuText, string ToolTip, string Executable)
         {
             public string Icon { get; set; } = Icon;
             public string ButtonText { get; set; } = ButtonText;
             public string MenuText { get; set; } = MenuText;
+            public string ToolTip { get; set; } = ToolTip;
             public string Executable { get; set; } = Executable;
         }
 

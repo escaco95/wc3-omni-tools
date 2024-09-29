@@ -20,7 +20,7 @@
         MouseLeave="Window_MouseLeave">
     
     <Grid Margin="5,5,5,5">
-        
+
         <!-- 외곽 글로우 효과 -->
         <Border BorderBrush="#4080FF" BorderThickness="1">
             <Border.Effect>
