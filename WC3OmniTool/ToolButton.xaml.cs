@@ -77,27 +77,7 @@ namespace WC3OmniTool
         {
             if (Tag is not string executablePath) return;
 
-            // 컨트롤의 Window 내 좌상단 위치 취득
-            var controlTop = PointToScreen(new Point(0, 0)).Y;
-            var controlLeft = PointToScreen(new Point(0, 0)).X;
-
-            // DPI 정보를 가져옴
-            var dpi = VisualTreeHelper.GetDpi(this);
-            double dpiScaleX = dpi.PixelsPerInchX / 96.0; // 96은 기본 DPI
-            double dpiScaleY = dpi.PixelsPerInchY / 96.0;
-
-            // DPI 보정을 적용하여 실제 화면 좌표를 계산
-            var correctedLeft = controlLeft / dpiScaleX;
-            var correctedTop = controlTop / dpiScaleY;
-            var correctedWidth = ActualWidth * dpiScaleX;
-            var correctedHeight = ActualHeight * dpiScaleY;
-
-            // 보정된 값을 인수로 전달
-            var args = $"-omni.bounds={(int)correctedLeft},{(int)correctedTop},{(int)correctedWidth},{(int)correctedHeight}";
-
-            Debug.WriteLine(args);
-
-            ProcessUtils.StartProcess(executablePath, args);
+            ProcessUtils.StartProcess(executablePath);
         }
     }
 }
