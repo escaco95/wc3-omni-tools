@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WC3OmniTool"
+        xmlns:ms="clr-namespace:WC3OmniTool.ModernStyles"
         mc:Ignorable="d"
         Title="WC3OmniTool" Height="550" Width="110"
         Background="Transparent"
@@ -19,6 +20,15 @@
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
         PreviewKeyDown="Window_PreviewKeyDown">
+
+    <Window.Resources>
+        <!-- 외부 리소스 딕셔너리 병합 -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ModernStyles/ModernSimpleButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     
     <Grid Margin="5" VerticalAlignment="Top">
 
@@ -38,20 +48,34 @@
             </Grid.RowDefinitions>
             
             <TextBlock Grid.Row="0" Text="WC3 Omni Tool" Padding="5" FontSize="9" VerticalAlignment="Center" MouseDown="OnCaptionMouseDown"/>
-            <Button HorizontalAlignment="Right" Width="20" Background="Transparent" BorderThickness="0" FocusVisualStyle="{x:Null}" Click="HideButton_Click">
+
+            <ms:ModernSimpleButton Style="{StaticResource ModernSimpleButtonStyle}"
+                                   Background="Transparent"
+                                   HotBackground="#D3D3D3"
+                                   HotForeground="#404040"
+                                   FontSize="7"
+                                   HorizontalAlignment="Right"
+                                   Width="20"
+                                   Click="HideButton_Click">
                 <Button.ToolTip>
                     <TextBlock Text="현재 창을 숨깁니다"/>
                 </Button.ToolTip>
-                <TextBlock Text="❌" Foreground="#F3F3F3" FontSize="7"/>
-            </Button>
+                <TextBlock Text="❌"/>
+            </ms:ModernSimpleButton>
+
             <Grid Grid.Row="0" VerticalAlignment="Top" Height="2" Background="#FF80FF" />
-            
-            <Button Grid.Row="1" Background="#4080FF" BorderThickness="0" FocusVisualStyle="{x:Null}" Click="RefreshButton_Click">
+
+            <ms:ModernSimpleButton Style="{StaticResource ModernSimpleButtonStyle}"
+                                   Background="#4080FF" 
+                                   HotBackground="#D3D3D3"
+                                   HotForeground="#404040"
+                                   Grid.Row="1" 
+                                   Click="RefreshButton_Click">
                 <Button.ToolTip>
                     <TextBlock Text="새로고침 (F5)&#x0a;도구 목록을 다시 스캔합니다"/>
                 </Button.ToolTip>
-                <TextBlock Text="🔄 새로고침" Foreground="#F3F3F3" FontSize="10"/>
-            </Button>
+                <TextBlock Text="🔄 새로고침"/>
+            </ms:ModernSimpleButton>
             
             <ScrollViewer x:Name="ToolButtonScrollViewer"
                           Grid.Row="2" 
