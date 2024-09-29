@@ -14,14 +14,6 @@ namespace ClassicReforgedEditorSwitch
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (App.ApplicationBounds is not null)
-            {
-                //this.Left = App.ApplicationBounds.Value.Left;
-                //this.Top = App.ApplicationBounds.Value.Top;
-                //this.Width = App.ApplicationBounds.Value.Width;
-                //this.Height = App.ApplicationBounds.Value.Height;
-            }
-
             ReloadRegistryState();
         }
 

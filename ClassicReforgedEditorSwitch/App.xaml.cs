@@ -1,6 +1,4 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace ClassicReforgedEditorSwitch
@@ -10,6 +8,7 @@ namespace ClassicReforgedEditorSwitch
     /// </summary>
     public partial class App : Application
     {
+        // FIXME : 사용하지 않는 기능, 추후 사용 가능성이 있으므로 존치
         public static Rect? ApplicationBounds { get; private set; } = null;
 
         protected override void OnStartup(StartupEventArgs e)

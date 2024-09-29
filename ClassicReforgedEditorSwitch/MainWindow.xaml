@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ClassicReforgedEditorSwitch"
         mc:Ignorable="d"
         Title="월드 에디터 클래식/리포지드 레지스트리 스위치"
-        WindowStartupLocation="Manual"
+        WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Width="520"
         Height="400"
