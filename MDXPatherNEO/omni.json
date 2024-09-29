@@ -2,6 +2,6 @@
   "Icon": "🧊",
   "ButtonText": "MDXPatherNEO",
   "MenuText": "MDXPatherNEO",
-  "ToolTip": "MDXPatherNEO\n\n이 도구를 활용하면 워크래프트 모델 파일(*.mdx)의 텍스처 경로를 손쉽게 변경할 수 있습니다.",
+  "ToolTip": "MDXPatherNEO\n이 도구를 활용하면 워크래프트 모델 파일(*.mdx)의 텍스처 경로를 손쉽게 변경할 수 있습니다.",
   "Executable": "MDXPatherNEO.exe"
 }
