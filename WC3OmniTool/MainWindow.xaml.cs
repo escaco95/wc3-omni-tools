@@ -175,14 +175,8 @@ namespace WC3OmniTool
         // 숨긴 도구 표시 버튼 클릭 시 숨겨진 도구 목록 창 표시
         private void HiddenToolButton_Click(object sender, RoutedEventArgs e)
         {
-            // 모달 윈도우가 열려 있는 동안 프로그램 종료 컨텍스트 메뉴 접근 방지
-            _exitMenuItem.Enabled = false;
-
-            // 숨겨진 도구 목록 창 표시 (모달)
-            new HiddenToolWindow().ShowDialog();
-
-            // 모달 윈도우가 닫힌 후 프로그램 종료 컨텍스트 메뉴 접근 허용
-            _exitMenuItem.Enabled = true;
+            // 숨겨진 도구 목록 창을 모달로 표시
+            ShowDialog(new HiddenToolWindow());
 
             // 도구 모음 새로고침
             RefreshTools();
@@ -291,6 +285,18 @@ namespace WC3OmniTool
             Show();
             WindowState = WindowState.Normal; // 외부 프로그램 간섭 등 어떤 이유로든 minimized 상태라면 복원
             Activate();
+        }
+
+        private void ShowDialog(Window modalWindow)
+        {
+            // 모달 윈도우가 열려 있는 동안 프로그램 종료 컨텍스트 메뉴 접근 방지
+            _exitMenuItem.Enabled = false;
+
+            // 숨겨진 도구 목록 창 표시 (모달)
+            modalWindow.ShowDialog();
+
+            // 모달 윈도우가 닫힌 후 프로그램 종료 컨텍스트 메뉴 접근 허용
+            _exitMenuItem.Enabled = true;
         }
 
         private void ClearToolButtons(Grid placeholder)
