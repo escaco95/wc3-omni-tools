@@ -34,8 +34,22 @@ namespace WC3OmniTool
             get => _menuText; set
             {
                 _menuText = value;
+                // 도구 삭제 메뉴의 헤더 텍스트를 변경
+                MenuDeleteTool.Header = $"'{_menuText}' 삭제";
                 // 도구 숨기기 메뉴의 헤더 텍스트를 변경
                 MenuHideTool.Header = $"'{_menuText}' 숨기기(_H)";
+            }
+        }
+
+        private bool _isCreatedByOmniTool = false;
+
+        public bool IsCreatedByOmniTool
+        {
+            get => _isCreatedByOmniTool; set
+            {
+                _isCreatedByOmniTool = value;
+                // 옴니툴에 의해 생성된 도구인 경우에만 삭제 메뉴를 활성화
+                MenuDeleteTool.IsEnabled = _isCreatedByOmniTool;
             }
         }
 
@@ -74,11 +88,40 @@ namespace WC3OmniTool
             }
         }
 
+        private void ToolDelete_Click(object sender, RoutedEventArgs e)
+        {
+            // 옴니툴에 의해 생성된 도구인 경우에만 삭제할 수 있음
+            if (!_isCreatedByOmniTool) return;
+
+            // 도구를 삭제하는 동작은 사용자의 클릭 실수로도 발생할 수 있으므로 사용자에게 한번 더 확인을 받도록 함
+            if (MessageBox.Show(Window.GetWindow(this), $"'{_menuText}' 도구를 삭제하시겠습니까?", "도구 삭제", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No) return;
+
+            // 물리적 파일 경로가 존재하는 경우에만 삭제할 수 있음
+            if (Tag is not string executablePath) return;
+
+            // 물리적 파일 경로가 위치한 디렉토리를 삭제하기 위해, 실행 파일 경로로부터 디렉토리 경로를 추출할 수 있어야 함
+            if (Path.GetDirectoryName(executablePath) is not string directoryPath) return;
+
+            // 도구 삭제
+            try
+            {
+                Directory.Delete(directoryPath, true);
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(Window.GetWindow(this), $"도구를 삭제하는 동안 오류가 발생했습니다: {ex.Message}", "도구 삭제", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // 성공적으로 디렉토리가 삭제되었다면, 부모 폼(MainWindow 인 경우)의 새로고침 메서드를 호출하여 도구 목록을 갱신
+            if (Window.GetWindow(this) is MainWindow mainWindow)
+                mainWindow.RefreshTools();
+        }
+
         private void ToolHide_Click(object sender, RoutedEventArgs e)
         {
-            // 도구를 숨기는 동작은 사용자의 클릭 실수로도 발생할 수 있으므로
-            // 사용자에게 한번 더 확인을 받도록 함
-            if (MessageBox.Show($"정말로 '{_menuText}' 도구를 숨기시겠습니까?", "도구 숨기기", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No) return;
+            // 도구를 숨기는 동작은 사용자의 클릭 실수로도 발생할 수 있으므로 사용자에게 한번 더 확인을 받도록 함
+            if (MessageBox.Show(Window.GetWindow(this), $"정말로 '{_menuText}' 도구를 숨기시겠습니까?", "도구 숨기기", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No) return;
 
             // 물리적 파일 경로가 존재하는 경우에만 숨길 수 있음
             if (Tag is not string executablePath) return;
@@ -100,7 +143,7 @@ namespace WC3OmniTool
             }
             catch (IOException ex)
             {
-                MessageBox.Show($"도구를 숨기는 동안 오류가 발생했습니다: {ex.Message}", "도구 숨기기", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Window.GetWindow(this), $"도구를 숨기는 동안 오류가 발생했습니다: {ex.Message}", "도구 숨기기", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

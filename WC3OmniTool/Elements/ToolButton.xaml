@@ -18,6 +18,7 @@
              MouseUp="UserControl_MouseUp">
     <UserControl.ContextMenu>
         <ContextMenu>
+            <MenuItem x:Name="MenuDeleteTool" Click="ToolDelete_Click"/>
             <MenuItem x:Name="MenuHideTool" Click="ToolHide_Click"/>
             <Separator/>
             <MenuItem Header="파일 탐색기에서 도구 폴더 열기(_X)" Click="ToolBrowse_Click"/>

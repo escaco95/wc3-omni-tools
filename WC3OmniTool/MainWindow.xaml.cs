@@ -176,8 +176,8 @@ namespace WC3OmniTool
         // 새 도구 추가 버튼 클릭 시 새 도구 추가 창 표시
         private void AddToolButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO : 새 도구 추가 창을 모달로 표시
-            throw new NotImplementedException();
+            // 새 도구 추가 창을 모달로 표시
+            ShowDialog(new AddToolWindow());
 
             // 도구 모음 새로고침
             RefreshTools();
@@ -368,6 +368,7 @@ namespace WC3OmniTool
             toolButton.MenuText = toolConfig.MenuText;
             toolButton.ToolTip = toolConfig.ToolTip;
             toolButton.Tag = toolConfig.Executable;
+            toolButton.IsCreatedByOmniTool = toolConfig.CreatedByOmniTool ?? false;
         }
 
         private static void DecorateTrayIconContextMenu(System.Windows.Forms.ToolStripMenuItem menuItem, OmniToolConfig toolConfig)
