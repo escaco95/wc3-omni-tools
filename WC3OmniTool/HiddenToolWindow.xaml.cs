@@ -108,11 +108,28 @@ namespace WC3OmniTool
             PlaceholderHide();
             foreach (var tool in scanner.ToolConfigs)
             {
+                // 상대 경로로 표시할 수 있는 경우, 상대 경로로 표시
+                // 실행: ..\{(상대 경로)}
+                // 실행: {절대 경로}
+                string relativePath = Path.GetRelativePath(_toolRootDirectory, tool.Executable);
+                string displayPath;
+
+                if (relativePath.StartsWith(".."))
+                {
+                    // 실행 파일이 애플리케이션 디렉토리 밖에 있음, 절대 경로 사용
+                    displayPath = tool.Executable;
+                }
+                else
+                {
+                    // 실행 파일이 애플리케이션 디렉토리 내에 있음, 상대 경로 사용
+                    displayPath = $"..\\{relativePath}";
+                }
+
                 HiddenToolListItem toolListItem = new()
                 {
                     Text = tool.MenuText,
                     Icon = tool.Icon,
-                    Executable = $"실행: {tool.Executable}",
+                    Executable = $"실행: {displayPath}",
                     Tag = tool.Executable
                 };
 
