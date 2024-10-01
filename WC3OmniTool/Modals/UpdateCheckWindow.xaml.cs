@@ -11,7 +11,7 @@ namespace WC3OmniTool.Modals
     {
         private static readonly string UserName = "escaco95";
         private static readonly string RepoName = "wc3-omni-tools";
-        private static readonly string CurrentVersion = "release-1.2";
+        private static readonly string CurrentVersion = "release-1.3";
 
         public UpdateCheckWindow()
         {
