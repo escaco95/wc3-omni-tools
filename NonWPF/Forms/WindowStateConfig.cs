@@ -60,7 +60,7 @@ namespace NonWPF.Forms
             var tempPath = config._tempPath;
 
             var configData = new WindowStateRecord(
-                IsMaximized: window.WindowState == System.Windows.WindowState.Maximized,
+                IsMaximized: window.WindowState == WindowState.Maximized,
                 Left: window.Left,
                 Top: window.Top,
                 Width: window.Width,
