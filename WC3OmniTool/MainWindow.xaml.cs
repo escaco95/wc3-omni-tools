@@ -172,6 +172,16 @@ namespace WC3OmniTool
             this.Hide();
         }
 
+        // 새 도구 추가 버튼 클릭 시 새 도구 추가 창 표시
+        private void AddToolButton_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO : 새 도구 추가 창을 모달로 표시
+            throw new NotImplementedException();
+
+            // 도구 모음 새로고침
+            RefreshTools();
+        }
+
         // 숨긴 도구 표시 버튼 클릭 시 숨겨진 도구 목록 창 표시
         private void HiddenToolButton_Click(object sender, RoutedEventArgs e)
         {
