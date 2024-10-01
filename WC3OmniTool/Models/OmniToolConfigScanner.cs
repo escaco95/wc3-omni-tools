@@ -8,9 +8,6 @@ namespace WC3OmniTool.Models
         // JSON 직렬화 옵션 (보기 좋은 형식으로 출력)
         private static readonly JsonSerializerOptions JsonSerializerOptions = new() { WriteIndented = true };
 
-        // 스캔 대상 파일명
-        private static readonly string _scanTargetFileName = "omni.json";
-
         public OmniToolConfig[] ToolConfigs { get; private set; }
 
         public Exception? Error { get; private set; }
@@ -35,7 +32,7 @@ namespace WC3OmniTool.Models
             return new OmniToolConfigScanner(omniConfigs, null);
         }
 
-        public static OmniToolConfigScanner Scan(string scanRootDirectory)
+        public static OmniToolConfigScanner Scan(string scanRootDirectory, string scanTargetFileName)
         {
             try
             {
@@ -51,7 +48,7 @@ namespace WC3OmniTool.Models
                 {
                     try
                     {
-                        var omniConfigPath = Path.Combine(toolDirectory, _scanTargetFileName);
+                        var omniConfigPath = Path.Combine(toolDirectory, scanTargetFileName);
 
                         if (!File.Exists(omniConfigPath)) continue;
 

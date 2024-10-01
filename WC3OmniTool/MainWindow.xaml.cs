@@ -22,6 +22,9 @@ namespace WC3OmniTool
         // 스캔 대상 디렉토리
         private static readonly string _toolRootDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tools");
 
+        // 스캔 대상 파일명
+        private static readonly string _scanTargetFileName = "omni.json";
+
         #endregion
 
         #region Private Fields
@@ -163,11 +166,29 @@ namespace WC3OmniTool
             }
         }
 
+        // X 버튼 클릭 시 창 숨기기
         private void HideButton_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
         }
 
+        // 숨긴 도구 표시 버튼 클릭 시 숨겨진 도구 목록 창 표시
+        private void HiddenToolButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 모달 윈도우가 열려 있는 동안 프로그램 종료 컨텍스트 메뉴 접근 방지
+            _exitMenuItem.Enabled = false;
+
+            // 숨겨진 도구 목록 창 표시 (모달)
+            new HiddenToolWindow().ShowDialog();
+
+            // 모달 윈도우가 닫힌 후 프로그램 종료 컨텍스트 메뉴 접근 허용
+            _exitMenuItem.Enabled = true;
+
+            // 도구 모음 새로고침
+            RefreshTools();
+        }
+
+        // 도구 모음 새로고침 버튼 클릭 시 도구 모음 새로고침
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             // 도구 모음 새로고침
@@ -328,6 +349,7 @@ namespace WC3OmniTool
         {
             toolButton.Icon = toolConfig.Icon;
             toolButton.Text = toolConfig.ButtonText;
+            toolButton.MenuText = toolConfig.MenuText;
             toolButton.ToolTip = toolConfig.ToolTip;
             toolButton.Tag = toolConfig.Executable;
         }
@@ -339,13 +361,13 @@ namespace WC3OmniTool
             menuItem.Tag = toolConfig.Executable;
         }
 
-        private async void RefreshTools()
+        public async void RefreshTools()
         {
             // 도구 목록 스캔하기 전, 기존 도구 목록 초기화
             ClearToolButtons(RefreshPlaceholder);
 
             // 도구 스캔
-            var loadResult = await Task.Run(() => OmniToolConfigScanner.Scan(_toolRootDirectory));
+            var loadResult = await Task.Run(() => OmniToolConfigScanner.Scan(_toolRootDirectory, _scanTargetFileName));
 
             // 도구 모음 새로고침 중 해제
             RefreshPlaceholder.Visibility = Visibility.Collapsed;

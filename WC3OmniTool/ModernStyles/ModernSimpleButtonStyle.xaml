@@ -13,7 +13,7 @@
         <!-- ControlTemplate 정의 -->
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="{x:Type local:ModernSimpleButton}">
                     <Border x:Name="border"
                             Background="{TemplateBinding Background}"
                             BorderThickness="0">
@@ -26,12 +26,12 @@
                         <!-- 마우스 오버 시 -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HotBackground}"/>
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HotForeground}"/>
+                            <Setter Property="Foreground" Value="Black"/>
                         </Trigger>
                         <!-- 버튼 클릭 시 -->
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HotBackground}"/>
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HotForeground}"/>
+                            <Setter Property="Foreground" Value="Black"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
