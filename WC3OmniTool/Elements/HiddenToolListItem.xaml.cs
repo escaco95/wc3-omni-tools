@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using WC3OmniTool.Modals;
 
 namespace WC3OmniTool.Elements
 {

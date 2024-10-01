@@ -4,7 +4,7 @@ using System.Windows.Input;
 using WC3OmniTool.Elements;
 using WC3OmniTool.Models;
 
-namespace WC3OmniTool
+namespace WC3OmniTool.Modals
 {
     /// <summary>
     /// HiddenToolWindow.xaml에 대한 상호 작용 논리

@@ -1,10 +1,11 @@
-using NonWPF.Data;
+﻿using NonWPF.Data;
 using NonWPF.Forms;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using WC3OmniTool.Modals;
 using WC3OmniTool.Models;
 
 namespace WC3OmniTool

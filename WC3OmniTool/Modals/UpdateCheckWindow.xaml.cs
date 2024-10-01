@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 
-namespace WC3OmniTool
+namespace WC3OmniTool.Modals
 {
     /// <summary>
     /// UpdateCheckWindow.xaml에 대한 상호 작용 논리
