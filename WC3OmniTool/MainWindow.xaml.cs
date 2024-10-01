@@ -1,4 +1,4 @@
-﻿using NonWPF.Data;
+using NonWPF.Data;
 using NonWPF.Forms;
 using System.IO;
 using System.Windows;
@@ -266,8 +266,7 @@ namespace WC3OmniTool
         // "업데이트 확인" 메뉴 아이템 클릭 시 업데이트 확인 창을 엶
         private void OnAppUpdateMenuItemClick(object? sender, EventArgs e)
         {
-            var updateCheckWindow = new UpdateCheckWindow();
-            updateCheckWindow.Show();
+            ShowDialog(new UpdateCheckWindow());
         }
 
         // "종료" 메뉴 아이템 클릭 시 애플리케이션 종료
