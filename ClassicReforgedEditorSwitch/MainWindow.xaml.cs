@@ -19,10 +19,8 @@ namespace ClassicReforgedEditorSwitch
 
         private void ClassicButton_Click(object sender, RoutedEventArgs e)
         {
-            if (WC3RegHelper.GetCurrentEditorMode() != WC3EditorVersion.Reforged)
-            {
-                return;
-            }
+            if (WC3RegHelper.GetCurrentEditorMode() != WC3EditorVersion.Reforged) return;
+
             WC3RegHelper.BackupTo(WC3EditorVersion.Reforged);
             WC3RegHelper.LoadPresetTo(WC3EditorVersion.Classic);
             ReloadRegistryState();
@@ -30,10 +28,8 @@ namespace ClassicReforgedEditorSwitch
 
         private void ReforgedButton_Click(object sender, RoutedEventArgs e)
         {
-            if (WC3RegHelper.GetCurrentEditorMode() != WC3EditorVersion.Classic)
-            {
-                return;
-            }
+            if (WC3RegHelper.GetCurrentEditorMode() != WC3EditorVersion.Classic) return;
+
             WC3RegHelper.BackupTo(WC3EditorVersion.Classic);
             WC3RegHelper.LoadPresetTo(WC3EditorVersion.Reforged);
             ReloadRegistryState();
