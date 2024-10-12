@@ -42,11 +42,7 @@ namespace WC3OmniTool.Modals
             try
             {
                 // 인터넷 브라우저로 업데이트 페이지 열기
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = _latestVersionUrl,
-                    UseShellExecute = true
-                });
+                ProcessUtils.OpenWebsite(_latestVersionUrl);
             }
             catch (Exception ex)
             {
