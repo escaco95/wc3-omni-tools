@@ -1,4 +1,4 @@
-using NonWPF.Data;
+﻿using NonWPF.Data;
 using NonWPF.Forms;
 using NonWPF.Network;
 using System.Diagnostics;
@@ -14,7 +14,7 @@ namespace WC3OmniTool.Modals
     {
         private static readonly string UserName = "escaco95";
         private static readonly string RepoName = "wc3-omni-tools";
-        private static readonly string CurrentVersion = "release-1.3";
+        private static readonly string CurrentVersion = "release-1.4";
 
         private string _latestVersionUrl = string.Empty;
 
