@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WC3OmniTool"
+        xmlns:local="clr-namespace:WC3OmniTool" xmlns:modernstyles="clr-namespace:WC3OmniTool.ModernStyles"
         mc:Ignorable="d"
         Title="Update Check"
-        Width="200" Height="100"
+        Width="400" Height="500"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -15,7 +15,25 @@
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         Topmost="True">
-    <Grid Margin="5" Background="#212121">
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <!-- 외부 리소스 딕셔너리 병합 -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ModernStyles/ModernSimpleButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="ApplicationBackground" Color="#212121"/>
+            <SolidColorBrush x:Key="ApplicationHighlight" Color="#4080FF"/>
+
+            <Style x:Key="ApplicationWindowBorder" TargetType="Border">
+                <Setter Property="BorderBrush" Value="{StaticResource ApplicationHighlight}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="5">
         <!-- 애니메이션에 대한 스토리보드 -->
         <Grid.Triggers>
             <EventTrigger RoutedEvent="Window.Loaded">
@@ -32,47 +50,117 @@
             </EventTrigger>
         </Grid.Triggers>
 
-        <!-- 외곽 글로우 효과 -->
-        <Border BorderBrush="#4080FF" BorderThickness="1">
+        <!-- 글로우 효과 -->
+        <Border Style="{StaticResource ApplicationWindowBorder}">
             <Border.Effect>
                 <BlurEffect Radius="5"/>
             </Border.Effect>
         </Border>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Background="{StaticResource ApplicationBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            
+            <!-- 윈도우 캡션 영역 -->
+            <Grid Grid.Row="0" Height="30" MouseDown="CaptionContainer_MouseDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Border Background="{StaticResource ApplicationBackground}"/>
+                <TextBlock Grid.Column="0" Text="업데이트 마법사" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <modernstyles:ModernSimpleButton Style="{StaticResource ModernSimpleButtonStyle}"
+                                            HotBackground="#861B2D"
+                                            HotForeground="#FFFFFF"
+                                            Grid.Column="1"
+                                            Content="❌"
+                                            Width="50"
+                                            Click="CloseButton_Click"/>
+            </Grid>
+            
+            <!-- 업데이트 내용 영역 -->
+            <Border x:Name="UpdateNoteContainer" Grid.Row="1" BorderBrush="#3D3D3D" BorderThickness="1" Margin="10" Visibility="Collapsed">
+                <ScrollViewer>
+                    <TextBlock x:Name="UpdateNoteText" d:Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." TextWrapping="Wrap" Padding="10"/>
+                </ScrollViewer>
+            </Border>
+            
+            <!-- 플레이스홀더 : 오류 -->
+            <StackPanel x:Name="PlaceholderError" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+                <TextBlock Text="⚠️" FontSize="40" TextAlignment="Center"/>
+                <TextBlock x:Name="PlaceholderErrorText" Text="업데이트 정보를 받아오지 못했습니다" TextAlignment="Center"/>
+            </StackPanel>
 
-            <!-- 로딩 애니메이션: 호 모양 -->
-            <Path Grid.Row="0" Width="30" Height="30" Fill="#4080FF">
-                <Path.Data>
-                    <PathGeometry>
-                        <PathFigure StartPoint="15,0">
-                            <!-- 호 모양을 위한 ArcSegment -->
-                            <ArcSegment x:Name="ArcSegment"
+            <!-- 플레이스홀더 : 최신 버전 -->
+            <StackPanel x:Name="PlaceholderLatest" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+                <TextBlock Text="🚀" FontSize="40" TextAlignment="Center"/>
+                <TextBlock Text="최신 버전입니다" TextAlignment="Center"/>
+            </StackPanel>
+
+            <!-- '업데이트 확인 중' 커버 -->
+            <Grid x:Name="UpdateAnimation" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- 로딩 애니메이션: 호 모양 -->
+                <Path Grid.Row="0" Width="30" Height="30" Fill="{StaticResource ApplicationHighlight}">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure StartPoint="15,0">
+                                <!-- 호 모양을 위한 ArcSegment -->
+                                <ArcSegment x:Name="ArcSegment"
                                         RotationAngle="45"
                                         Point="15,30"
                                         Size="2,2"
                                         SweepDirection="Clockwise"
                                         IsLargeArc="True"/>
-                        </PathFigure>
-                    </PathGeometry>
-                </Path.Data>
-                <Path.RenderTransform>
-                    <RotateTransform x:Name="LoadingSpinner" CenterX="15" CenterY="15"/>
-                </Path.RenderTransform>
-            </Path>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                    <Path.RenderTransform>
+                        <RotateTransform x:Name="LoadingSpinner" CenterX="15" CenterY="15"/>
+                    </Path.RenderTransform>
+                </Path>
 
-            <!-- 텍스트 표시 -->
-            <TextBlock Grid.Row="2" Text="업데이트 확인 중..."/>
+                <!-- 텍스트 표시 -->
+                <TextBlock Grid.Row="2" Text="업데이트 확인 중..."/>
+
+            </Grid>
             
+            <!-- 버튼 영역 -->
+            <Grid Grid.Row="2" Margin="10" Height="30" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <modernstyles:ModernSimpleButton x:Name="UpdateButton" Style="{StaticResource ModernSimpleButtonStyle}"
+                                                     Margin="5,0,5,0"
+                                                     Visibility="Collapsed"
+                                                     IsEnabled="False"
+                                                     Background="#4080FF"
+                                                     HotBackground="#4080FF"
+                                                     HotForeground="#FFFFFF"
+                                                     Content="다운로드"
+                                                     Width="100"
+                                                     Click="UpdateButton_Click"/>
+                    <modernstyles:ModernSimpleButton Style="{StaticResource ModernSimpleButtonStyle}"
+                                                     Margin="5,0,5,0"
+                                                     Background="#861B2D"
+                                                     HotBackground="#861B2D"
+                                                     HotForeground="#FFFFFF"
+                                                     Content="취소"
+                                                     Width="100"
+                                                     Click="CloseButton_Click"/>
+                </StackPanel>
+            </Grid>
         </Grid>
 
+
         <!-- 외곽선 효과 -->
-        <Border BorderBrush="#4080FF" BorderThickness="1"/>
-        
+        <Border Style="{StaticResource ApplicationWindowBorder}"/>
+
     </Grid>
 </Window>

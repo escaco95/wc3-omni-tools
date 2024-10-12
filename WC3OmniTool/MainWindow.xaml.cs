@@ -301,12 +301,14 @@ namespace WC3OmniTool
         {
             // 모달 윈도우가 열려 있는 동안 프로그램 종료 컨텍스트 메뉴 접근 방지
             _exitMenuItem.Enabled = false;
+            _appUpdateMenuItem.Enabled = false; // 추가적인 모달 창이 열릴 수 있으므로 업데이트 확인 메뉴도 비활성화
 
             // 숨겨진 도구 목록 창 표시 (모달)
             modalWindow.ShowDialog();
 
             // 모달 윈도우가 닫힌 후 프로그램 종료 컨텍스트 메뉴 접근 허용
             _exitMenuItem.Enabled = true;
+            _appUpdateMenuItem.Enabled = true; // 메뉴 재활성화
         }
 
         private void ClearToolButtons(Grid placeholder)
