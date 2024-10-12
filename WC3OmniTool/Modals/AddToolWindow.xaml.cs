@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using NonWPF.Data;
 using System.IO;
 using System.Text.Json;
@@ -199,7 +199,7 @@ namespace WC3OmniTool.Modals
             var toolName = Path.GetFileNameWithoutExtension(browseExecutionFileDialog.FileName);
 
             // 폴더 경로가 입력되어 있지 않다면, 폴더 경로를 실행 파일의 이름으로 입력한다.
-            if (string.IsNullOrEmpty(InputToolIcon.Text))
+            if (string.IsNullOrEmpty(InputDirectoryName.Text))
             {
                 InputDirectoryName.Text = toolName;
             }
