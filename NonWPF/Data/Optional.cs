@@ -92,6 +92,16 @@ namespace NonWPF.Data
         }
 
         /// <summary>
+        /// Filters the Optional using a predicate. If the predicate is met or the value is null, an empty Optional is returned.
+        /// </summary>
+        /// <param name="predicate">A predicate function to test the value.</param>
+        /// <returns>An Optional containing the value if it does not satisfy the predicate, otherwise an empty Optional.</returns>
+        public Optional<T> Not(Predicate<T> predicate)
+        {
+            return value == null || predicate(value) ? Empty : this;
+        }
+
+        /// <summary>
         /// Casts the value to the specified type if possible. 
         /// Returns an Optional containing the casted value, or an empty Optional if the cast fails.
         /// </summary>

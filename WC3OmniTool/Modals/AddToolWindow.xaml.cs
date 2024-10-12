@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
+using NonWPF.Data;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
@@ -152,22 +153,22 @@ namespace WC3OmniTool.Modals
 
         private void InputToolIcon_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            SampleToolIcon.Text = string.IsNullOrEmpty(InputToolIcon.Text) ? "「」" : InputToolIcon.Text;
+            SampleToolIcon.Text = Optional<string>.Of(InputToolIcon.Text).Not(string.IsNullOrEmpty).OrElse("「」");
         }
 
         private void InputToolText_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            SampleToolName.Text = string.IsNullOrEmpty(InputToolText.Text) ? "도구 이름(버튼)" : InputToolText.Text;
+            SampleToolName.Text = Optional<string>.Of(InputToolText.Text).Not(string.IsNullOrEmpty).OrElse("도구 이름(버튼)");
         }
 
         private void InputToolMenuText_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            SampleToolMenuText.Text = string.IsNullOrEmpty(InputToolMenuText.Text) ? "도구 이름(메뉴)" : InputToolMenuText.Text;
+            SampleToolMenuText.Text = Optional<string>.Of(InputToolMenuText.Text).Not(string.IsNullOrEmpty).OrElse("도구 이름(메뉴)");
         }
 
         private void InputToolTip_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            var finalToolTip = string.IsNullOrEmpty(InputToolTip.Text) ? "도구 설명" : InputToolTip.Text;
+            var finalToolTip = Optional<string>.Of(InputToolTip.Text).Not(string.IsNullOrEmpty).OrElse("도구 설명");
             SampleToolMenuText.ToolTip = finalToolTip;
             SampleToolButton.ToolTip = finalToolTip;
         }
