@@ -82,7 +82,7 @@ namespace WC3OmniTool.Modals
                 UpdateNoteContainer.Visibility = Visibility.Visible;
                 // 업데이트 로그 중 (```) 문자열과 (```) 문자열 사이의 문자열을 가져옴
                 // 이 과정 중 오류 발생 시, 빈 문자열 반환
-                var updateNote = TryOptional<string>.Of(() => result.LatestVersionLog.Substring(result.LatestVersionLog.IndexOf("```") + 3, result.LatestVersionLog.LastIndexOf("```") - 3 - result.LatestVersionLog.IndexOf("```"))).OrElse("업데이트 로그를 불러올 수 없습니다.\n다운로드 페이지에서 확인하실 수 있습니다.");
+                var updateNote = Optional<string>.TryOf(() => result.LatestVersionLog.Substring(result.LatestVersionLog.IndexOf("```") + 3, result.LatestVersionLog.LastIndexOf("```") - 3 - result.LatestVersionLog.IndexOf("```"))).OrElse("업데이트 로그를 불러올 수 없습니다.\n다운로드 페이지에서 확인하실 수 있습니다.");
                 UpdateNoteText.Text = $"버전 정보\n\n현재 버전: {CurrentVersion}\n최신 버전: {result.LatestVersionTagName}\n\n{updateNote}";
             }
             else
