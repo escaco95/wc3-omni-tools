@@ -167,7 +167,9 @@ namespace WC3OmniTool.Modals
 
         private void InputToolTip_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            SampleToolMenuText.ToolTip = string.IsNullOrEmpty(InputToolTip.Text) ? "도구 설명" : InputToolTip.Text;
+            var finalToolTip = string.IsNullOrEmpty(InputToolTip.Text) ? "도구 설명" : InputToolTip.Text;
+            SampleToolMenuText.ToolTip = finalToolTip;
+            SampleToolButton.ToolTip = finalToolTip;
         }
 
         private void Browse_Click(object sender, RoutedEventArgs e)

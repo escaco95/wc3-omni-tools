@@ -81,7 +81,15 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="미리 보기" TextAlignment="Center"/>
-                        <Border Grid.Row="1" Width="100" Height="100" Margin="10" BorderThickness="1" BorderBrush="{StaticResource ModernWindowHighlight}">
+                        <Border x:Name="SampleToolButton" 
+                                Grid.Row="1" 
+                                Width="100"
+                                Height="100" 
+                                Margin="10" 
+                                BorderThickness="1" 
+                                Background="{StaticResource ModernWindowBackground}" 
+                                BorderBrush="{StaticResource ModernWindowHighlight}"
+                                ToolTip="도구 설명">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock x:Name="SampleToolIcon" Text="「」" FontSize="30" Margin="0,0,0,5" TextAlignment="Center"/>
                                 <TextBlock x:Name="SampleToolName" Text="도구 이름(버튼)" FontSize="9" TextAlignment="Center"/>
