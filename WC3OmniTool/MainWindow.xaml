@@ -22,25 +22,28 @@
         PreviewKeyDown="Window_PreviewKeyDown">
 
     <Window.Resources>
+        
         <!-- 외부 리소스 딕셔너리 병합 -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ModernStyles/ModernWindow.xaml"/>
                 <ResourceDictionary Source="ModernStyles/ModernSimpleButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        
     </Window.Resources>
     
     <Grid Margin="5" VerticalAlignment="Top">
 
         <!-- 외곽 글로우 효과 -->
-        <Border BorderBrush="#4080FF" BorderThickness="1">
+        <Border Style="{StaticResource ModernWindowBorder}">
             <Border.Effect>
                 <BlurEffect Radius="5"/>
             </Border.Effect>
         </Border>
 
         <!-- 콘텐츠 영역 -->
-        <Grid Background="#212121">
+        <Grid Background="{StaticResource ModernWindowBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="20"/>
@@ -142,8 +145,8 @@
         </Grid>
 
         <!-- 외곽선 효과 -->
-        <Border BorderBrush="#4080FF" BorderThickness="1"/>
-        
+        <Border Style="{StaticResource ModernWindowBorder}"/>
+
     </Grid>
     
 </Window>

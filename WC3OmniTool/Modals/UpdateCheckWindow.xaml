@@ -20,16 +20,11 @@
 
             <!-- 외부 리소스 딕셔너리 병합 -->
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ModernStyles/ModernWindow.xaml"/>
                 <ResourceDictionary Source="../ModernStyles/ModernSimpleButtonStyle.xaml"/>
+                <ResourceDictionary Source="../ModernStyles/ModernScrollViewer.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <SolidColorBrush x:Key="ApplicationBackground" Color="#212121"/>
-            <SolidColorBrush x:Key="ApplicationHighlight" Color="#4080FF"/>
-
-            <Style x:Key="ApplicationWindowBorder" TargetType="Border">
-                <Setter Property="BorderBrush" Value="{StaticResource ApplicationHighlight}"/>
-                <Setter Property="BorderThickness" Value="1"/>
-            </Style>
+            
         </ResourceDictionary>
     </Window.Resources>
 
@@ -51,13 +46,13 @@
         </Grid.Triggers>
 
         <!-- 글로우 효과 -->
-        <Border Style="{StaticResource ApplicationWindowBorder}">
+        <Border Style="{StaticResource ModernWindowBorder}">
             <Border.Effect>
                 <BlurEffect Radius="5"/>
             </Border.Effect>
         </Border>
 
-        <Grid Background="{StaticResource ApplicationBackground}">
+        <Grid Background="{StaticResource ModernWindowBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -70,7 +65,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Border Background="{StaticResource ApplicationBackground}"/>
+                <Border Background="{StaticResource ModernWindowBackground}"/>
                 <TextBlock Grid.Column="0" Text="업데이트 마법사" VerticalAlignment="Center" Margin="10,0,0,0"/>
                 <modernstyles:ModernSimpleButton Style="{StaticResource ModernSimpleButtonStyle}"
                                             HotBackground="#861B2D"
@@ -82,7 +77,13 @@
             </Grid>
             
             <!-- 업데이트 내용 영역 -->
-            <Border x:Name="UpdateNoteContainer" Grid.Row="1" BorderBrush="#3D3D3D" BorderThickness="1" Margin="10" Visibility="Collapsed">
+            <Border x:Name="UpdateNoteContainer"
+                    Grid.Row="1" 
+                    BorderBrush="#3D3D3D" 
+                    BorderThickness="1"
+                    Margin="10" 
+                    Visibility="Collapsed"
+                    d:Visibility="Visible">
                 <ScrollViewer>
                     <TextBlock x:Name="UpdateNoteText" d:Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." TextWrapping="Wrap" Padding="10"/>
                 </ScrollViewer>
@@ -109,7 +110,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- 로딩 애니메이션: 호 모양 -->
-                <Path Grid.Row="0" Width="30" Height="30" Fill="{StaticResource ApplicationHighlight}">
+                <Path Grid.Row="0" Width="30" Height="30" Fill="{StaticResource ModernWindowHighlight}">
                     <Path.Data>
                         <PathGeometry>
                             <PathFigure StartPoint="15,0">
@@ -139,6 +140,7 @@
                     <modernstyles:ModernSimpleButton x:Name="UpdateButton" Style="{StaticResource ModernSimpleButtonStyle}"
                                                      Margin="5,0,5,0"
                                                      Visibility="Collapsed"
+                                                     d:Visibility="Visible"
                                                      IsEnabled="False"
                                                      Background="#4080FF"
                                                      HotBackground="#4080FF"
@@ -160,7 +162,7 @@
 
 
         <!-- 외곽선 효과 -->
-        <Border Style="{StaticResource ApplicationWindowBorder}"/>
+        <Border Style="{StaticResource ModernWindowBorder}"/>
 
     </Grid>
 </Window>

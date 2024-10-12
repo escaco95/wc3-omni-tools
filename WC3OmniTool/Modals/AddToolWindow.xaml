@@ -22,16 +22,10 @@
 
             <!-- 외부 리소스 딕셔너리 병합 -->
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ModernStyles/ModernWindow.xaml"/>
                 <ResourceDictionary Source="../ModernStyles/ModernSimpleButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <SolidColorBrush x:Key="ApplicationBackground" Color="#212121"/>
-            <SolidColorBrush x:Key="ApplicationHighlight" Color="#4080FF"/>
-
-            <Style x:Key="ApplicationWindowBorder" TargetType="Border">
-                <Setter Property="BorderBrush" Value="{StaticResource ApplicationHighlight}"/>
-                <Setter Property="BorderThickness" Value="1"/>
-            </Style>
+            
         </ResourceDictionary>
     </Window.Resources>
 
@@ -42,14 +36,14 @@
         <Grid Margin="5">
 
             <!-- 글로우 효과 -->
-            <Border Style="{StaticResource ApplicationWindowBorder}">
+            <Border Style="{StaticResource ModernWindowBorder}">
                 <Border.Effect>
                     <BlurEffect Radius="5"/>
                 </Border.Effect>
             </Border>
 
             <!-- 윈도우 콘텐츠 -->
-            <Grid Background="{StaticResource ApplicationBackground}">
+            <Grid Background="{StaticResource ModernWindowBackground}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -61,7 +55,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Border Background="{StaticResource ApplicationBackground}"/>
+                    <Border Background="{StaticResource ModernWindowBackground}"/>
                     <TextBlock Grid.Column="0" Text="도구 추가 마법사" VerticalAlignment="Center" Margin="10,0,0,0"/>
                     <ms:ModernSimpleButton Style="{StaticResource ModernSimpleButtonStyle}"
                                             HotBackground="#861B2D"
@@ -87,7 +81,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="미리 보기" TextAlignment="Center"/>
-                        <Border Grid.Row="1" Width="100" Height="100" Margin="10" BorderThickness="1" BorderBrush="{StaticResource ApplicationHighlight}">
+                        <Border Grid.Row="1" Width="100" Height="100" Margin="10" BorderThickness="1" BorderBrush="{StaticResource ModernWindowHighlight}">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock x:Name="SampleToolIcon" Text="「」" FontSize="30" Margin="0,0,0,5" TextAlignment="Center"/>
                                 <TextBlock x:Name="SampleToolName" Text="도구 이름(버튼)" FontSize="9" TextAlignment="Center"/>
@@ -171,7 +165,7 @@
                                                Content="초기화"
                                                Click="ResetButton_Click" Margin="0,0,5,0"/>
                             <ms:ModernSimpleButton Style="{StaticResource ModernSimpleButtonStyle}"
-                                               Background="{StaticResource ApplicationHighlight}"
+                                               Background="{StaticResource ModernWindowHighlight}"
                                                HotBackground="#861B2D"
                                                HotForeground="#FFFFFF"
                                                Width="80"
@@ -185,7 +179,7 @@
             </Grid>
 
             <!-- 외곽선 효과 -->
-            <Border Style="{StaticResource ApplicationWindowBorder}"/>
+            <Border Style="{StaticResource ModernWindowBorder}"/>
 
         </Grid>
     </Grid>
